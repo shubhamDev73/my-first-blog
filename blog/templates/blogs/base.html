@@ -1,0 +1,17 @@
+{% load staticfiles %}
+<html>
+<head>
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+</head>
+<body>
+            {% block content %}
+            {% endblock %}
+        <div class="page-header">
+{% if user.is_authenticated and request.path != '/post/new/' %}
+<a href="{% url 'post_new' %}">New post</a>
+{% endif %}
+        </div>
+<br>
+<a href="{% url 'post_list' %}">Home</a>
+</body>
+</html>
