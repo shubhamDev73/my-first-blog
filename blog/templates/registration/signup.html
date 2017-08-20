@@ -1,0 +1,14 @@
+{% extends 'blogs/base.html' %}
+{% block content %}
+<form method="post" action="{% url 'signup_submit' %}">
+{% csrf_token %}
+Username : <input name="username" required></input>
+<br>
+Email : <input name="email"></input>
+<br>
+Password : <input type="password" name="password" required></input>
+<br>
+<input type="submit" value="signup" />
+<input type="hidden" name="next" value="{{ next }}" />
+</form>
+{% endblock %}
