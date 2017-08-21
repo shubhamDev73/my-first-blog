@@ -3,8 +3,6 @@ from . import views
 
 urlpatterns = [
     url(r'^accounts/signup/$', views.signup, name='signup'),
-    url(r'^accounts/signup/submit/$', views.createUser, name='signup_submit'),
-    url(r'^accounts/signup/submit/end/$', views.submit_end, name='submit_end'),
     url(r'^$', views.post_list, name='post_list'),
     url(r'^post/(?P<pk>\d+)/$', views.post_detail, name='post_detail'),
     url(r'^post/new/$', views.post_new, name='post_new'),

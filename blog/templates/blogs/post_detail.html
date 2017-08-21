@@ -1,23 +1,23 @@
 {% extends 'blogs/base.html' %}
 
 {% block content %}
-<div>
-<h1>{{ post.title }}</h1>
-{% if post.published_date %}
-<div>
-Made on: {{ post.published_date }}
-</div>
-{% endif %}
-{% if post.edited_date %}
-<div>
-Last edit: {{ post.edited_date }}
-</div>
-{% endif %}
-<p>{{ post.text|linebreaksbr }}</p>
-<div>Author: {{ post.author }}</div>
-<br><br>
-{% if user.is_authenticated and request.user == post.author %}
-<a href="{% url 'post_edit' pk=post.pk %}">Edit post</a><br>
-<a href="{% url 'post_remove' pk=post.pk %}">Remove post</a><br><br>
-{% endif %}
+    <div>
+        <h1>{{ post.title }}</h1>
+        {% if post.published_date %}
+            <div>
+                Made on: {{ post.published_date }}
+            </div>
+        {% endif %}
+        {% if post.edited_date %}
+            <div>
+                Last edit: {{ post.edited_date }}
+            </div>
+        {% endif %}
+        <p>{{ post.text|linebreaksbr }}</p>
+        <div>Author: {{ post.author }}</div>
+        <br><br>
+        {% if user.is_authenticated and request.user == post.author %}
+            <a href="{% url 'post_edit' pk=post.pk %}">Edit post</a><br>
+            <a href="{% url 'post_remove' pk=post.pk %}">Remove post</a><br><br>
+        {% endif %}
 {% endblock %}

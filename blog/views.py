@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth import login
 from .models import Post
 from .forms import PostForm
 from django.utils import timezone
@@ -43,18 +44,22 @@ def post_remove(request, pk):
     post.delete()
     return redirect('post_list')
 def signup(request):
-    return render(request, 'registration/signup.html')
-def createUser(request):
-    userName = request.POST.get('username', None)
-    password = request.POST.get('password', None)
-    email = request.POST.get('email', None)
-    try:
-        obj = User.objects.get(username=userName)
-    except:
-        user = User.objects.create_user(userName, email, password)
-        user.save()
-        return redirect('submit_end')
-    #user already exists
-    return redirect('signup')
-def submit_end(request):
-    return render(request, 'registration/submit_end.html')
+    if request.method == 'POST':
+        userName = request.POST.get('username', None)
+        password = request.POST.get('password', None)
+        email = request.POST.get('email', None)
+        try:
+            obj = User.objects.get(username=userName)
+        except User.DoesNotExist:
+            if userName == '' or password == '':
+                return render(request, 'registration/signup.html', {'error': 'Some required fields are empty'})
+            else:
+                user = User.objects.create_user(userName, email, password)
+                user.save()
+                login(request, user)
+                return redirect('post_list')
+        return render(request, 'registration/signup.html', {'error':'User already exists'})
+    else:
+        return render(request, 'registration/signup.html')
+def signup_end(request):
+    return render(request, 'registration/signup_end.html')
